@@ -8,7 +8,7 @@ import ready_to_marry.searchservice.repository.TestRepository;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test")
+@RequestMapping("/search")
 public class TestController {
 
     private final TestRepository testRepository;
