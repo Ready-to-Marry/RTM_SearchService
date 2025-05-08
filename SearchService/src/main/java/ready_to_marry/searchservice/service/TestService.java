@@ -13,7 +13,7 @@ public class TestService {
     private RestTemplate restTemplate;
 
     public String callUserService() {
-        String url = "http://user-service:8081/test/";
+        String url = "http://user-service/test/";
 
         // GET 요청 보내기
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
