@@ -9,7 +9,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import ready_to_marry.searchservice.Item.entity.Item;
+import ready_to_marry.searchservice.Item.entity.ItemDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class KafkaConsumerConfig {
 
     @Bean
-    public ConsumerFactory<String, Item> consumerFactory() {
+    public ConsumerFactory<String, ItemDocument> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9094,localhost:9095,localhost:9096");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "item-group");
@@ -30,13 +30,13 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(
                 props,
                 new StringDeserializer(),
-                new JsonDeserializer<>(Item.class, false)
+                new JsonDeserializer<>(ItemDocument.class, false)
         );
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Item> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Item> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, ItemDocument> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ItemDocument> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

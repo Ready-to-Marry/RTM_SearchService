@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import ready_to_marry.searchservice.Item.entity.Item;
+import ready_to_marry.searchservice.Item.entity.ItemDocument;
 import ready_to_marry.searchservice.Item.repository.ItemRepository;
 
 @Service
@@ -15,10 +15,10 @@ public class KafkaConsumerService {
     private final ItemRepository itemRepository;
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
 
-    @KafkaListener(topics = "item", groupId = "spring")
-    public void listen(Item item) {
-        logger.info("Received message: {}", item);
-        itemRepository.save(item);
-        System.out.println("Received message: " + item);
+    @KafkaListener(topics = "items", groupId = "spring")
+    public void listen(ItemDocument itemDocument) {
+        logger.info("Received message: {}", itemDocument);
+        itemRepository.save(itemDocument);
+        System.out.println("Received message: " + itemDocument);
     }
 }
