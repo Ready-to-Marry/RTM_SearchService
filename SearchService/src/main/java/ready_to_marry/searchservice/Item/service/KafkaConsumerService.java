@@ -17,6 +17,11 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "item", groupId = "spring")
     public void listen(Item item) {
+
+        if (item == null || item.getItemId() == null) {
+            throw new IllegalArgumentException("itemId is required");
+        }
+
         logger.info("Received message: {}", item);
         itemRepository.save(item);
         System.out.println("Received message: " + item);
