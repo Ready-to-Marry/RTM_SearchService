@@ -44,8 +44,14 @@ dependencies {
     // Spring Boot Actuator (Health Check용)
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    // eureka client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    // eureka client
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.apache.kafka:kafka-clients'
+    implementation 'org.springframework.kafka:spring-kafka' // Spring Kafka 버전
+
+
+    // Spring Data Elasticsearch
+    implementation 'org.springframework.data:spring-data-elasticsearch'
 }
 
 tasks.named('test') {
