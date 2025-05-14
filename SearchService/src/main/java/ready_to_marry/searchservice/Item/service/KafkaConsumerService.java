@@ -15,8 +15,13 @@ public class KafkaConsumerService {
     private final ItemRepository itemRepository;
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
 
-    @KafkaListener(topics = "items", groupId = "spring")
+    @KafkaListener(topics = "item", groupId = "spring")
     public void listen(ItemDocument itemDocument) {
+
+        if (itemDocument == null || itemDocument.getItemId() == null) {
+            throw new IllegalArgumentException("itemId is required");
+        }
+
         logger.info("Received message: {}", itemDocument);
         itemRepository.save(itemDocument);
         System.out.println("Received message: " + itemDocument);
