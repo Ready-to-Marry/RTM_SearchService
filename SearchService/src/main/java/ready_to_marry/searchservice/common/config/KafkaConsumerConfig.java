@@ -18,7 +18,8 @@ import org.springframework.kafka.support.serializer.DeserializationException;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.util.backoff.FixedBackOff;
-import ready_to_marry.searchservice.Item.entity.Item;
+import ready_to_marry.searchservice.Item.entity.ItemDocument;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class KafkaConsumerConfig {
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerConfig.class);
 
     @Bean
-    public ConsumerFactory<String, Item> consumerFactory() {
+    public ConsumerFactory<String, ItemDocument> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9094,localhost:9095,localhost:9096");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "item-group");
@@ -44,7 +45,7 @@ public class KafkaConsumerConfig {
 
         // JsonDeserializer 세부 설정
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");        // 추후 패키지 제한
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, Item.class.getName());
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, ItemDocument.class.getName());
 
         return new DefaultKafkaConsumerFactory<>(props);
     }
@@ -87,10 +88,10 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Item> kafkaListenerContainerFactory(
-            ConsumerFactory<String, Item> consumerFactory) {
+    public ConcurrentKafkaListenerContainerFactory<String, ItemDocument> kafkaListenerContainerFactory(
+            ConsumerFactory<String, ItemDocument> consumerFactory) {
 
-        ConcurrentKafkaListenerContainerFactory<String, Item> factory =
+        ConcurrentKafkaListenerContainerFactory<String, ItemDocument> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
 

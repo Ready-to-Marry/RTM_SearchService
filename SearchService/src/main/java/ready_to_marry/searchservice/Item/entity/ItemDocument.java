@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 @Document(indexName = "items")  // Elasticsearch 인덱스 이름 설정
-public class Item {
+public class ItemDocument {
 
     @Id
     @Field(type = FieldType.Long, name = "item_id")
