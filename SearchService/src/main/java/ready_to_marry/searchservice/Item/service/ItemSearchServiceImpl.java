@@ -1,5 +1,6 @@
 package ready_to_marry.searchservice.Item.service;
 
+import io.lettuce.core.RedisException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ready_to_marry.searchservice.Item.entity.ItemDocument;
 import ready_to_marry.searchservice.Item.repository.ItemSearchRepositoryImpl;
-import ready_to_marry.searchservice.common.exception.search.SearchException;
+import ready_to_marry.searchservice.common.exception.ErrorCode;
+import ready_to_marry.searchservice.common.exception.search.InfraException;
+import ready_to_marry.searchservice.common.exception.search.BusinessException;
 
 import java.util.List;
 
@@ -34,7 +37,7 @@ public class ItemSearchServiceImpl implements ItemSearchService{
     public void saveSearchTerm(String userId, String searchTerm) {
 
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
-            throw new SearchException("검색어는 비어 있을 수 없습니다.");
+            throw new BusinessException(ErrorCode.NO_SEARCH_TERM);
         }
 
         try {
@@ -46,8 +49,8 @@ public class ItemSearchServiceImpl implements ItemSearchService{
             if (listOps.size(userSearchKey) > historyLimit) {
                 listOps.rightPop(userSearchKey);
             }
-        } catch (Exception e) {
-            throw new SearchException("검색어 저장 중 오류가 발생했습니다.");
+        } catch (RedisException e) {
+            throw new InfraException(ErrorCode.REDIS_SAVE_FAILURE, e);
         }
     }
 
@@ -57,7 +60,7 @@ public class ItemSearchServiceImpl implements ItemSearchService{
         String userSearchKey = "recent_searches:" + userId;
         List<String> result = listOps.range(userSearchKey, 0, historyLimit - 1);
         if (result.isEmpty()) {
-            throw new SearchException("해당 검색어에 대한 결과가 없습니다.");
+            throw new BusinessException(ErrorCode.NO_SEARCH_RESULT);
         }
         return result;
     }
