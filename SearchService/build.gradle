@@ -58,6 +58,9 @@ dependencies {
 
     // Jackson (JSON 직렬화/역직렬화용)
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // redis 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

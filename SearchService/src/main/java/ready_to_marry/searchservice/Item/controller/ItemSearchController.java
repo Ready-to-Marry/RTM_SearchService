@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ready_to_marry.searchservice.Item.entity.ItemDocument;
 import ready_to_marry.searchservice.Item.service.ItemSearchService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/search")
@@ -22,6 +24,15 @@ public class ItemSearchController {
     public Page<ItemDocument> searchItems(
             @RequestParam String keyword,
             @PageableDefault(size = 10) Pageable pageable) {
+
+        // redis에 검색어 저장
+        itemSearchService.saveSearchTerm(keyword);
+
         return itemSearchService.search(keyword, pageable);
+    }
+
+    @GetMapping("/history")
+    public List<String> getRecentSearches() {
+        return itemSearchService.getRecentSearches();
     }
 }
