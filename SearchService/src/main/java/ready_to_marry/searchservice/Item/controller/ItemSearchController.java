@@ -23,16 +23,17 @@ public class ItemSearchController {
     @GetMapping
     public Page<ItemDocument> searchItems(
             @RequestParam String keyword,
+            @RequestParam String userId,
             @PageableDefault(size = 10) Pageable pageable) {
 
         // redis에 검색어 저장
-        itemSearchService.saveSearchTerm(keyword);
+        itemSearchService.saveSearchTerm(userId, keyword);
 
         return itemSearchService.search(keyword, pageable);
     }
 
     @GetMapping("/history")
-    public List<String> getRecentSearches() {
-        return itemSearchService.getRecentSearches();
+    public List<String> getRecentSearches(@RequestParam String userId) {
+        return itemSearchService.getRecentSearches(userId);
     }
 }

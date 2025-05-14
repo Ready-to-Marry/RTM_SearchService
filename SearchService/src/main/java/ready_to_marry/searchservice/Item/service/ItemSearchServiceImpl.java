@@ -30,19 +30,21 @@ public class ItemSearchServiceImpl implements ItemSearchService{
     }
 
     // 최근 검색어 저장
-    public void saveSearchTerm(String searchTerm) {
-        // Redis에서 최근 검색어 리스트에 추가 (최대 historyLimit개까지)
-        listOps.leftPush("recent_searches", searchTerm);
+    public void saveSearchTerm(String userId, String searchTerm) {
+        // Redis에서 각 사용자에 대한 최근 검색어 리스트에 추가 (최대 historyLimit개까지)
+        String userSearchKey = "recent_searches:" + userId;
+        listOps.leftPush(userSearchKey, searchTerm);
 
         // 리스트 크기가 historyLimit을 넘기면 가장 오래된 검색어 삭제
-        if (listOps.size("recent_searches") > historyLimit) {
-            listOps.rightPop("recent_searches");
+        if (listOps.size(userSearchKey) > historyLimit) {
+            listOps.rightPop(userSearchKey);
         }
     }
 
     // 최근 검색어 목록 조회
-    public List<String> getRecentSearches() {
-        // 최근 검색어 최대 historyLimit개를 가져옴
-        return listOps.range("recent_searches", 0, historyLimit - 1);
+    public List<String> getRecentSearches(String userId) {
+        // 각 사용자의 최근 검색어 최대 historyLimit개를 가져옴
+        String userSearchKey = "recent_searches:" + userId;
+        return listOps.range(userSearchKey, 0, historyLimit - 1);
     }
 }

@@ -12,8 +12,8 @@ public interface ItemSearchService {
     Page<ItemDocument> search(String keyword, Pageable pageable);
 
     // 검색어 저장 (redis)
-    void saveSearchTerm(String searchTerm);
+    void saveSearchTerm(String userId, String searchTerm);
 
     // 최근 검색어 조회 (최대 10개)
-    List<String> getRecentSearches();
+    List<String> getRecentSearches(String userId);
 }
