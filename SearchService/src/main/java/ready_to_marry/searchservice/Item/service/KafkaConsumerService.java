@@ -15,7 +15,7 @@ public class KafkaConsumerService {
     private final ItemRepository itemRepository;
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
 
-    @KafkaListener(topics = "item", groupId = "spring")
+    @KafkaListener(topics = "items", groupId = "spring")
     public void listen(ItemDocument itemDocument) {
 
         if (itemDocument == null || itemDocument.getItemId() == null) {
