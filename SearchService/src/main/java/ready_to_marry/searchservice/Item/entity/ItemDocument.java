@@ -38,8 +38,8 @@ public class ItemDocument {
     @Field(type = FieldType.Keyword)
     private String region;  // 지역
 
-    @Field(type = FieldType.Integer)
-    private Integer price;  // 정렬/필터
+    @Field(type = FieldType.Long)
+    private Long price;  // 정렬/필터
 
     @Field(type = FieldType.Keyword, name = "thumbnail_url")
     private String thumbnailUrl;  // 목록 썸네일
