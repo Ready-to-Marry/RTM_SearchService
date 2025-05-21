@@ -2,6 +2,7 @@ package ready_to_marry.searchservice.Item.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import ready_to_marry.searchservice.Item.entity.ItemDocument;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface ItemSearchService {
 
     // 최근 검색어 조회 (최대 10개)
     List<String> getRecentSearches(String userId);
+
+
+    List<ItemDocument> getByCategory(String category);
 }
