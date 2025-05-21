@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ready_to_marry.searchservice.Item.entity.ItemDocument;
+import ready_to_marry.searchservice.Item.repository.ItemRepository;
 import ready_to_marry.searchservice.Item.repository.ItemSearchRepositoryImpl;
 import ready_to_marry.searchservice.common.exception.ErrorCode;
 import ready_to_marry.searchservice.common.exception.search.InfraException;
@@ -28,6 +29,7 @@ public class ItemSearchServiceImpl implements ItemSearchService{
     private int historyLimit;
 
     private final ItemSearchRepositoryImpl itemSearchRepository;
+    private final ItemRepository itemRepository;
 
     public Page<ItemDocument> search(String keyword, Pageable pageable) {
         return itemSearchRepository.searchByNameOrTags(keyword, pageable);
@@ -63,5 +65,9 @@ public class ItemSearchServiceImpl implements ItemSearchService{
             throw new BusinessException(ErrorCode.NO_SEARCH_RESULT);
         }
         return result;
+    }
+
+    public List<ItemDocument> getByCategory(String category) {
+        return itemRepository.findByCategory(category);
     }
 }
