@@ -32,7 +32,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, ItemKafkaDTO> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9094,localhost:9095,localhost:9096");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.0.134.233:9094,10.0.146.105:9095,10.0.166.50:9096");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "item-group");
 
         // Key도 ErrorHandlingDeserializer로 래핑
