@@ -44,8 +44,23 @@ dependencies {
     // Spring Boot Actuator (Health Check용)
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    // eureka client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    // eureka client
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.apache.kafka:kafka-clients'
+    implementation 'org.springframework.kafka:spring-kafka' // Spring Kafka 버전
+
+
+    // Spring Data Elasticsearch
+    implementation 'org.springframework.data:spring-data-elasticsearch:5.0.0'
+
+    // Elasticsearch Java Client
+    implementation "co.elastic.clients:elasticsearch-java:8.5.1"
+
+    // Jackson (JSON 직렬화/역직렬화용)
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // redis 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
