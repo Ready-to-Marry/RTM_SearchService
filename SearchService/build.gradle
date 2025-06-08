@@ -41,14 +41,16 @@ dependencies {
     // PostgreSQL JDBC Driver
     implementation 'org.postgresql:postgresql:42.2.5'
 
-    // Spring Boot Actuator (Health Check용)
+    // Spring Boot Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Micrometer-Registry
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 
     // eureka client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.apache.kafka:kafka-clients'
     implementation 'org.springframework.kafka:spring-kafka' // Spring Kafka 버전
-
 
     // Spring Data Elasticsearch
     implementation 'org.springframework.data:spring-data-elasticsearch:5.0.0'
